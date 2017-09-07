@@ -1,0 +1,14 @@
+
+mvn clean install -Dmaven.test.skip=true
+
+
+-Djava.security.egd=file:///dev/urandom
+
+ps -ef | grep path | awk '{print $2}' | xargs kill -9
+
+pbrun -u root dap
+
+mount -o rw /dev/sda /opt/dev1
+
+for i in {1..83}; do echo $1;cp icva_g10_20150930_${i}_83.xml icva_g10_20150930_new_${i}_83.xml; sed -i 's/type="BASE"/type="NEW_TYPE"/g' icva_g10_20150930_new_${i}_83.xml; done
+
