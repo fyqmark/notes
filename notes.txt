@@ -12,3 +12,45 @@ mount -o rw /dev/sda /opt/dev1
 
 for i in {1..83}; do echo $1;cp icva_g10_20150930_${i}_83.xml icva_g10_20150930_new_${i}_83.xml; sed -i 's/type="BASE"/type="NEW_TYPE"/g' icva_g10_20150930_new_${i}_83.xml; done
 
+get table_name with record count:
+select table_name,to_number(extractvalue(xmltype(dbms_xmlgen.getxml('select count(1) c from '||owner||'.'||table_name)),'/ROWSET/ROW/C')) as count from ALL_TABLES where owner='CVAQA';
+
+/opt/sybase/150/OCS-15_0/bin/bcp CVASupport_20150428 in trade.csv -I/tmp/interfaces -SPROD_N -Uprod -Pprod -c -t"," -Y -F2
+
+ps aux --sort -rss | head
+
+JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6006 -Xms2G -Xmx2G -Djava.util.logging.manager=org.apache.juli.ClassLoaderManager"
+
+free memory
+sync;echo 1 > /proc/sys/vm/drop_caches
+
+jar -uf cva-commons-2.3.jar com/citi/risk/cva/commons/service/ServiceLocator.class
+
+for i in `ls $SERVICEHOME/ext-libs/*.jar`;do CLASSPATH=${CLASSPATH}:$i;done
+
+prtdiag & vmstat for mem in SunOS
+
+change -E 0 username (expire the account)
+change -E -1 username (recover the account)
+
+su -s /bin/bash -c /bin/bash cvadev
+
+<subsystem type="sftp" application="sft-server-g3" action="allow" exec-directly="no" />
+
+find largest 10 files (DESC)
+find . -type f -printf "%s\t%p\n" | sort -u | tail
+
+export PS1=`echo '[\033[1;35m$LOGNAME\033[0m'"@"'\033[0;31m$HOSTNAME\033[0m''\033[0;32m:$PWD\033[0m]'``echo "\n> "`
+shopt =s checkwinsize
+
+mvn clean install assembly:assembly
+mvn -s settings.xml -f pom.xml clean install -DskipTests=true
+
+find . -type f | xargs ls -l --time-style="+%Y-%m-%d" | grep "2018-03-12"
+
+find . -ctime -1
+
+awk -F"," 'NR==FNR {h[$1,$2]=$3;next} {print $1,$2,$3,h[$1,$2]}' OFS="," file1 file2 > file3
+
+for i in $( cat /tmp/file ); do awk -F"|" -va=${i} '{if($5==a) {print $0}}' file;done
+
